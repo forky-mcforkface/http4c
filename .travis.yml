@@ -1,0 +1,18 @@
+language: scala
+scala:
+- 2.12.4
+jdk:
+  - oraclejdk8
+env:
+  global:
+  - LIB_VERSION=$TRAVIS_TAG
+
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: project/publish.sh
+  on:
+    tags: true
+
+script:
+  - sbt -Dbintray.user=$BINTRAY_USER -Dbintray.pass=$BINTRAY_PASSWORD +test
